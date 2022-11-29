@@ -22,7 +22,7 @@ const DefaultScreenPosts = ({ route, navigation }) => {
               source={{ uri: item.photo }}
               style={{
                 height: 200,
-                width: 200,
+                width: 350,
                 borderRadius: 10,
                 marginHorizontal: 10,
               }}

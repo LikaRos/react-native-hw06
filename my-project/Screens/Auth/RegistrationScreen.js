@@ -15,15 +15,19 @@ import {
   Pressable,
   Button,
 } from "react-native";
-
+import { useDispatch } from "react-redux";
+import { authSignUpUser } from "../../redux/auth/authOperations";
 const initialState = {
-  username: "",
+  nickname: "",
   email: "",
   password: "",
 };
 
 export const RegistrationScreen = ({ navigation }) => {
   const [state, setState] = useState(initialState);
+
+  const dispatch = useDispatch();
+
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   console.log(isShowKeyboard);
 
@@ -59,6 +63,13 @@ export const RegistrationScreen = ({ navigation }) => {
   if (!fontsLoaded) {
     return null;
   }
+  const handleSubmit = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+
+    dispatch(authSignUpUser(state));
+    setState(initialState);
+  };
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
@@ -83,11 +94,11 @@ export const RegistrationScreen = ({ navigation }) => {
                   <TextInput
                     style={styles.input}
                     placeholder={"Логин"}
-                    value={state.username}
+                    value={state.nickname}
                     onChangeText={(value) =>
                       setState((prevState) => ({
                         ...prevState,
-                        username: value,
+                        nickname: value,
                       }))
                     }
                     autoCapitalize={"none"}
@@ -129,7 +140,11 @@ export const RegistrationScreen = ({ navigation }) => {
                     <Text style={styles.showText}>Показать</Text>
                   </Pressable>
                 </View>
-                <TouchableOpacity activeOpacity={0.6} style={styles.button}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={styles.button}
+                  onPress={handleSubmit}
+                >
                   <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.8}>

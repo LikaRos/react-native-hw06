@@ -15,9 +15,10 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   Pressable,
-  Image,
-  Button,
 } from "react-native";
+
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../redux/auth/authOperations";
 
 const initialState = {
   email: "",
@@ -27,6 +28,8 @@ const initialState = {
 export const LoginScreen = ({ navigation }) => {
   console.log("navigation", navigation);
   const [state, setState] = useState(initialState);
+  const dispatch = useDispatch();
+
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [type, setType] = useState(false);
   const handleClick = () => setType("text");
@@ -43,11 +46,19 @@ export const LoginScreen = ({ navigation }) => {
       const width = Dimensions.get("window").width - 8 * 2;
       setDimensions(width);
     };
-    Dimensions.addEventListener("change", onchange);
+    const subscription = Dimensions.addEventListener("change", onchange);
     return () => {
-      Dimensions.removeEventListener("change", onchange);
+      subscription?.remove();
     };
   }, []);
+
+  const handleSubmit = () => {
+    console.log("click");
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    dispatch(authSignInUser(state));
+    setState(initialState);
+  };
 
   const KeyboardHide = () => {
     setIsShowKeyboard(false);
@@ -129,7 +140,11 @@ export const LoginScreen = ({ navigation }) => {
                     <Text style={styles.showText}>Показать</Text>
                   </Pressable>
                 </View>
-                <TouchableOpacity activeOpacity={0.8} style={styles.button}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.button}
+                  onPress={handleSubmit}
+                >
                   <Text style={styles.btnTitle}>Войти</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.8}>
