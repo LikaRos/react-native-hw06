@@ -1,26 +1,3 @@
-// import React from "react";
-// import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-// import IconButton from "../../components/IconButton";
-// import db from "../../firebase/config";
-// import { useDispatch } from "react-redux";
-// import { authSignOutUser } from "../../redux/auth/authOperations";
-
-// const ProfileScreen = () => {
-//   const dispatch = useDispatch();
-//   const signOut = () => {
-//     dispatch(authSignOutUser());
-//   };
-//   return (
-//     <View style={styles.container}>
-//       <Text> ProfileScreen </Text>
-
-//       <TouchableOpacity onPress={signOut} style={styles.logOutIcon}>
-//         <IconButton type="log-out" onPress={signOut} />
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
-
 import React from "react";
 import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
@@ -45,7 +22,7 @@ const ProfileScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <Text>Profile screen</Text>
+      <Text style={styles.text}>Profile screen</Text>
       <Button title="signOut" onPress={signOut} style={styles.logOutBtn} />
     </View>
   );
